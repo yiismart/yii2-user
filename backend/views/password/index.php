@@ -16,12 +16,13 @@ $this->params['breadcrumbs'] = [
 <h1><?= Html::encode($title) ?></h1>
 
 <?php $form = ActiveForm::begin([
-    'layout' => 'horizontal',
     'enableClientValidation' => false,
 ]); ?>
 
     <?= $form->field($model, 'oldPassword')->passwordInput() ?>
+
     <?= $form->field($model, 'password')->passwordInput() ?>
+    
     <?= $form->field($model, 'confirm')->passwordInput() ?>
 
     <div class="form-group form-buttons row">
