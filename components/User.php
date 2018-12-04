@@ -3,6 +3,7 @@
 namespace smart\user\components;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use smart\user\frontend\Module;
 
@@ -35,7 +36,6 @@ class User extends \yii\web\User
     public function init()
     {
         parent::init();
-
         Module::translation();
     }
 
