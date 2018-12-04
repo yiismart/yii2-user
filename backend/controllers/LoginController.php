@@ -10,7 +10,8 @@ class LoginController extends Controller
 {
 
     /**
-     * @inheritdoc
+     * Login
+     * @return string
      */
     public function actionIndex()
     {
