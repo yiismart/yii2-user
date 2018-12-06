@@ -64,7 +64,8 @@ class Module extends BackendModule
         }
 
         $items['user'] = [
-            'label' => Yii::t('user', 'Security'), 
+            'label' => '<i class="fas fa-unlock-alt"></i> ' . Html::encode(Yii::t('user', 'Security')),
+            'encode' => false,
             'items' => [
                 ['label' => Yii::t('user', 'Permissions'), 'url' => ['/user/permission/index']],
                 ['label' => Yii::t('user', 'Roles'), 'url' => ['/user/role/index']],
