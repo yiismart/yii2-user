@@ -88,10 +88,10 @@ class Module extends BackendModule
         $username = Html::encode(Yii::$app->getUser()->getUsername());
 
         return [
-            ['label' => '<span class="glyphicon glyphicon-user"></span><span class="cms-username"> ' . $username . '</span>', 'encode' => false, 'items' => [
+            ['label' => '<i class="fas fa-user"></i><span class="cms-username"> ' . $username . '</span>', 'encode' => false, 'dropDownOptions' => ['class' => 'dropdown-menu-right'], 'items' => [
                 ['label' => Yii::t('user', 'Settings'), 'url' => ['/user/settings/index']],
                 ['label' => Yii::t('user', 'Change password'), 'url' => ['/user/password/index']],
-                '<li class="divider"></li>',
+                '<div class="dropdown-divider"></div>',
                 ['label' => Yii::t('user', 'Logout'), 'url' => ['/user/logout/index']],
             ]],
         ];
