@@ -84,7 +84,7 @@ class PermissionController extends BackendController
     /**
      * Delete
      * @param string $name
-     * @return void
+     * @return string
      */
     public function actionDelete($name)
     {
