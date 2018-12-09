@@ -6,12 +6,8 @@ use Yii;
 use smart\base\BackendController;
 use smart\user\backend\filters\PermissionFilter;
 use smart\user\backend\forms\PermissionForm;
-use smart\user\models\Permission;
-// use yii\data\ArrayDataProvider;
-// use yii\filters\AccessControl;
-// use yii\web\BadRequestHttpException;
-
-// use cms\user\backend\models\PermissionForm;
+use smart\user\backend\models\Permission;
+use yii\web\BadRequestHttpException;
 
 class PermissionController extends BackendController
 {

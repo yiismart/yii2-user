@@ -5,9 +5,9 @@ namespace smart\user\backend\filters;
 use Yii;
 use yii\data\ArrayDataProvider;
 use smart\base\FilterInterface;
-use smart\user\models\Permission;
+use smart\user\backend\models\Role;
 
-class PermissionFilter extends Permission implements FilterInterface
+class RoleFilter extends Role implements FilterInterface
 {
 
     /**
@@ -36,8 +36,8 @@ class PermissionFilter extends Permission implements FilterInterface
     public function getDataProvider($config = [])
     {
         $items = [];
-        foreach (Yii::$app->getAuthManager()->getPermissions() as $name => $item) {
-            if ($name == 'own') {
+        foreach (Yii::$app->getAuthManager()->getRoles() as $name => $item) {
+            if ($name == 'author') {
                 continue;
             }
             $items[] = new static([
