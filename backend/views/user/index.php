@@ -34,6 +34,9 @@ $this->params['breadcrumbs'] = [
                 $r = Html::encode($model->email);
                 $s = $model->username;
                 if ($s !== $model->email) $r .= ' ' . Html::tag('span', Html::encode('(' . $s . ')'), ['class' => 'text-muted']);
+                if ($model->admin) {
+                    $r .= ' ' . Html::tag('span', 'admin', ['class' => 'badge badge-danger', 'title' => Yii::t('user', 'Administrator')]);
+                }
                 foreach (Yii::$app->getAuthManager()->getRolesByUser($model->id) as $role) {
                     if ($role->name == 'author') {
                         continue;
