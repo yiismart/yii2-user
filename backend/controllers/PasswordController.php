@@ -22,11 +22,15 @@ class PasswordController extends Controller
             return $user->loginRequired();
         }
 
+        $object = $user->getIdentity();
         $model = new PasswordChangeForm;
-        $model->assignFrom($user->getIdentity());
+        $model->assignFrom($object);
 
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->changePassword()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
+            $model->assignTo($object);
+            if ($object->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
+            }
             return $this->goBack();
         }
 

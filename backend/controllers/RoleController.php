@@ -57,7 +57,7 @@ class RoleController extends BackendController
      */
     public function actionUpdate($name)
     {
-        $object = Role::find($name);
+        $object = Role::findOne($name);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
@@ -86,7 +86,7 @@ class RoleController extends BackendController
      */
     public function actionDelete($name)
     {
-        $object = Role::find($name);
+        $object = Role::findOne($name);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }

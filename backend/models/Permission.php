@@ -33,7 +33,7 @@ class Permission extends Model
      * @param string $name 
      * @return static
      */
-    public static function find($name)
+    public static function findOne($name)
     {
         $auth = Yii::$app->getAuthManager();
 

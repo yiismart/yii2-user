@@ -5,13 +5,8 @@ namespace smart\user\backend\forms;
 use Yii;
 use smart\base\Form;
 
-class PasswordChangeForm extends Form
+class UserPasswordForm extends Form
 {
-
-    /**
-     * @var string old password
-     */
-    public $oldPassword;
 
     /**
      * @var string new password
@@ -24,6 +19,11 @@ class PasswordChangeForm extends Form
     public $confirm;
 
     /**
+     * @var boolean
+     */
+    public $passwordChange;
+
+    /**
      * @var smart\user\models\User
      */
     private $_object;
@@ -34,9 +34,9 @@ class PasswordChangeForm extends Form
     public function attributeLabels()
     {
         return [
-            'oldPassword' => Yii::t('user', 'Current password'),
             'password' => Yii::t('user', 'New password'),
             'confirm' => Yii::t('user', 'Confirm'),
+            'passwordChange' => Yii::t('user', 'User must change password at next login'),
         ];
     }
 
@@ -46,16 +46,10 @@ class PasswordChangeForm extends Form
     public function rules()
     {
         return [
-            ['oldPassword', function($attribute) {
-                if (!$this->hasErrors()) {
-                    if (!$this->_object->validatePassword($this->$attribute)) {
-                        $this->addError($attribute, Yii::t('user', 'The password is entered incorrectly.'));
-                    }
-                }
-            }],
             ['password', 'string', 'min' => 4],
             ['confirm', 'compare', 'compareAttribute' => 'password'],
-            [['oldPassword', 'password', 'confirm'], 'required'],
+            ['passwordChange', 'boolean'],
+            [['password', 'confirm'], 'required'],
         ];
     }
 
@@ -73,7 +67,7 @@ class PasswordChangeForm extends Form
     public function assignTo($object)
     {
         $object->setPassword($this->password);
-        $object->passwordChange = false;
+        $object->passwordChange = $this->passwordChange == 1;
     }
 
 }

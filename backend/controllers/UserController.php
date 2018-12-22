@@ -5,11 +5,17 @@ namespace smart\user\backend\controllers;
 use Yii;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\backend\filters\PermissionFilter;
-use smart\user\backend\forms\PermissionForm;
-use smart\user\backend\models\Permission;
+use smart\user\backend\filters\UserFilter;
+use smart\user\backend\forms\UserForm;
+use smart\user\backend\forms\UserPasswordForm;
+use smart\user\backend\models\User;
 
-class PermissionController extends BackendController
+// use yii\filters\AccessControl;
+// use yii\web\Controller;
+
+// use cms\user\backend\models\PasswordForm;
+
+class UserController extends BackendController
 {
 
     /**
@@ -18,7 +24,7 @@ class PermissionController extends BackendController
      */
     public function actionIndex()
     {
-        $model = new PermissionFilter;
+        $model = new UserFilter;
         $model->load(Yii::$app->getRequest()->get());
 
         return $this->render('index', [
@@ -32,8 +38,8 @@ class PermissionController extends BackendController
      */
     public function actionCreate()
     {
-        $object = new Permission;
-        $model = new PermissionForm;
+        $object = new User;
+        $model = new UserForm(['scenario' => 'create']);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $model->assignTo($object);
@@ -50,17 +56,17 @@ class PermissionController extends BackendController
 
     /**
      * Update
-     * @param string $name
+     * @param integer $id 
      * @return string
      */
-    public function actionUpdate($name)
+    public function actionUpdate($id)
     {
-        $object = Permission::findOne($name);
+        $object = User::findOne($id);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
 
-        $model = new PermissionForm;
+        $model = new UserForm;
         $model->assignFrom($object);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
@@ -78,22 +84,32 @@ class PermissionController extends BackendController
     }
 
     /**
-     * Delete
-     * @param string $name
+     * Set password
+     * @param integer $id 
      * @return string
      */
-    public function actionDelete($name)
+    public function actionPassword($id)
     {
-        $object = Permission::findOne($name);
+        $object = User::findOne($id);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
 
-        if ($object->delete()) {
-            Yii::$app->session->setFlash('success', Yii::t('cms', 'Item deleted successfully.'));
+        $model = new UserPasswordForm;
+        $model->assignFrom($object);
+
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
+            $model->assignTo($object);
+            if ($object->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
+            }
+            return $this->redirect(['index']);
         }
 
-        return $this->redirect(['index']);
+        return $this->render('password', [
+            'model' => $model,
+            'object' => $object,
+        ]);
     }
 
 }

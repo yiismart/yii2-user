@@ -83,9 +83,9 @@ class RoleForm extends RbacForm
 
         $object->name = $this->name;
         $object->description = $this->description;
-        $object->roles = array_map(function ($name) use ($auth) {return $auth->getRole($name);}, (array)$this->roles);
-        $object->permissions = array_map(function ($name) use ($auth) {return $auth->getPermission($name);}, (array)$this->permissions);
-        $object->users = (array)$this->users;
+        $object->roles = array_map(function ($name) use ($auth) {return $auth->getRole($name);}, is_array($this->roles) ? $this->roles : []);
+        $object->permissions = array_map(function ($name) use ($auth) {return $auth->getPermission($name);}, is_array($this->permissions) ? $this->permissions : []);
+        $object->users = is_array($this->users) ? $this->users : [];
     }
 
     /**
