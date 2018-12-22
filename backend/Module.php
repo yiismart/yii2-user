@@ -89,7 +89,7 @@ class Module extends BackendModule
         $username = Html::encode(Yii::$app->getUser()->getUsername());
 
         return [
-            'label' => '<i class="fas fa-user"></i><span class="cms-username"> ' . $username . '</span>',
+            'label' => '<i class="fas fa-user"></i><span class="d-none d-sm-inline"> ' . $username . '</span>',
             'encode' => false,
             'dropDownOptions' => ['class' => 'dropdown-menu-right'],
             'items' => [
