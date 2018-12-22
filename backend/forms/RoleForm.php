@@ -67,12 +67,8 @@ class RoleForm extends RbacForm
     {
         $this->name = $object->name;
         $this->description = $object->description;
-        $this->roles = array_map(function ($item) {
-            return $item->name;
-        }, $object->roles);
-        $this->permissions = array_map(function ($item) {
-            return $item->name;
-        }, $object->permissions);
+        $this->roles = array_map(function ($item) {return $item->name;}, $object->roles);
+        $this->permissions = array_map(function ($item) {return $item->name;}, $object->permissions);
         $this->users = $object->users;
 
         $this->_name = $object->name;
@@ -83,8 +79,49 @@ class RoleForm extends RbacForm
      */
     public function assignTo($object)
     {
+        $auth = Yii::$app->getAuthManager();
+
         $object->name = $this->name;
         $object->description = $this->description;
+        $object->roles = array_map(function ($name) use ($auth) {return $auth->getRole($name);}, (array)$this->roles);
+        $object->permissions = array_map(function ($name) use ($auth) {return $auth->getPermission($name);}, (array)$this->permissions);
+        $object->users = (array)$this->users;
+    }
+
+    /**
+     * Return available roles names
+     * @return array
+     */
+    public function getAvailableRoles()
+    {
+        $auth = Yii::$app->getAuthManager();
+
+        $items = $auth->getRoles();
+        unset($items['author']);
+
+        if ($this->_name !== null && (($item = $auth->getRole($this->_name)) !== null)) {
+            foreach ($items as $k => $v) {
+                if (!$auth->canAddChild($item, $v)) {
+                    unset($items[$k]);
+                }
+            }
+        }
+
+        return array_map(create_function('$v', 'return $v->name;'), $items);
+    }
+
+    /**
+     * Return available permissions names
+     * @return array
+     */
+    public function getAvailablePermissions()
+    {
+        $auth = Yii::$app->getAuthManager();
+
+        $items = $auth->getPermissions();
+        unset($items['own']);
+
+        return array_map(create_function('$v', 'return $v->name;'), $items);
     }
 
 }

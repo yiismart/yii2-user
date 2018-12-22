@@ -17,7 +17,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <h1><?= Html::encode($title) ?></h1>
 
-<p>
+<p class="form-buttons">
     <?= Html::a(Yii::t('cms', 'Create'), ['create'], ['class' => 'btn btn-primary']) ?>
 </p>
 
@@ -33,14 +33,22 @@ $this->params['breadcrumbs'] = [
                     $r .= ' ' . Html::tag('span', Html::encode('(' . $model->description . ')'), ['class' => 'text-muted']);
                 }
 
-                // $children = Yii::$app->authManager->getChildren($model->name);
-                foreach ($model->children as $item) {
+                // Roles
+                foreach ($model->roles as $item) {
                     $r .= ' ' . Html::tag('span', Html::encode($item->name), [
-                        // 'class' => $item->type == $child::TYPE_ROLE ? 'label label-primary' : 'label label-default',
-                        'class' => $item instanceof Role ? 'label label-primary' : 'label label-secondary',
+                        'class' => 'badge badge-primary',
                         'title' => $item->description,
                     ]);
                 }
+
+                // Permissions
+                foreach ($model->permissions as $item) {
+                    $r .= ' ' . Html::tag('span', Html::encode($item->name), [
+                        'class' => 'badge badge-secondary',
+                        'title' => $item->description,
+                    ]);
+                }
+
                 return $r;
             },
         ],

@@ -4,6 +4,7 @@ namespace smart\user\backend\filters;
 
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\rbac\Item;
 use smart\base\FilterInterface;
 use smart\user\backend\models\Role;
 
@@ -35,14 +36,29 @@ class RoleFilter extends Role implements FilterInterface
      */
     public function getDataProvider($config = [])
     {
+        $auth = Yii::$app->getAuthManager();
+
         $items = [];
-        foreach (Yii::$app->getAuthManager()->getRoles() as $name => $item) {
-            if ($name == 'author') {
+        foreach ($auth->getRoles() as $item) {
+            if ($item->name == 'author') {
                 continue;
             }
+
+            // Roles and permissions
+            $roles = $permissions = [];
+            foreach ($auth->getChildren($item->name) as $child) {
+                if ($child->type == Item::TYPE_ROLE) {
+                    $roles[] = $child;
+                } else {
+                    $permissions[] = $child;
+                }
+            }
+
             $items[] = new static([
                 'name' => $item->name,
                 'description' => $item->description,
+                'roles' => $roles,
+                'permissions' => $permissions,
             ]);
         }
 
