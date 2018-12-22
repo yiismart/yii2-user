@@ -3,11 +3,11 @@
 namespace smart\user\backend\controllers;
 
 use Yii;
+use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
 use smart\user\backend\filters\PermissionFilter;
 use smart\user\backend\forms\PermissionForm;
 use smart\user\backend\models\Permission;
-use yii\web\BadRequestHttpException;
 
 class PermissionController extends BackendController
 {
