@@ -5,20 +5,10 @@ namespace smart\user\backend\filters;
 use Yii;
 use yii\data\ArrayDataProvider;
 use smart\base\FilterInterface;
-use smart\user\models\Permission;
+use smart\user\backend\models\Permission;
 
 class PermissionFilter extends Permission implements FilterInterface
 {
-
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $description;
 
     /**
      * @inheritdoc
@@ -27,6 +17,7 @@ class PermissionFilter extends Permission implements FilterInterface
     {
         return [
             'name' => Yii::t('user', 'Name'),
+            'own' => Yii::t('user', 'Allow to author'),
         ];
     }
 
@@ -35,14 +26,18 @@ class PermissionFilter extends Permission implements FilterInterface
      */
     public function getDataProvider($config = [])
     {
+        $auth = Yii::$app->getAuthManager();
+        $ownItem = $auth->getPermission('own');
+
         $items = [];
-        foreach (Yii::$app->getAuthManager()->getPermissions() as $name => $item) {
+        foreach ($auth->getPermissions() as $name => $item) {
             if ($name == 'own') {
                 continue;
             }
             $items[] = new static([
                 'name' => $item->name,
                 'description' => $item->description,
+                'own' => $ownItem && $auth->hasChild($ownItem, $item),
             ]);
         }
 

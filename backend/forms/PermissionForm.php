@@ -57,6 +57,7 @@ class PermissionForm extends RbacForm
         $this->description = $object->description;
         $this->own = $object->own ? '1' : '0';
 
+        // Rbac form validation
         $this->_name = $object->name;
     }
 
