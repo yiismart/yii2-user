@@ -10,11 +10,6 @@ use smart\user\backend\forms\UserForm;
 use smart\user\backend\forms\UserPasswordForm;
 use smart\user\backend\models\User;
 
-// use yii\filters\AccessControl;
-// use yii\web\Controller;
-
-// use cms\user\backend\models\PasswordForm;
-
 class UserController extends BackendController
 {
 

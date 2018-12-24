@@ -8,7 +8,6 @@ use smart\base\BackendModule;
 use smart\user\components\AuthorRule;
 use smart\user\models\User;
 
-
 class Module extends BackendModule
 {
 

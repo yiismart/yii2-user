@@ -3,9 +3,10 @@
 namespace smart\user\backend\forms;
 
 use Yii;
+use smart\base\Form;
 use smart\user\models\User;
 
-class UserForm extends RbacForm
+class UserForm extends Form
 {
 
     /**
