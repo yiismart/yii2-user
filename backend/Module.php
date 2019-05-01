@@ -90,7 +90,7 @@ class Module extends BackendModule
         return [
             'label' => '<i class="fas fa-user"></i><span class="d-none d-sm-inline"> ' . $username . '</span>',
             'encode' => false,
-            'dropDownOptions' => ['class' => 'dropdown-menu-right'],
+            'dropdownOptions' => ['class' => 'dropdown-menu-right'],
             'items' => [
                 ['label' => Yii::t('user', 'Settings'), 'url' => ['/user/settings/index']],
                 ['label' => Yii::t('user', 'Change password'), 'url' => ['/user/password/index']],
