@@ -1,14 +1,13 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\Controller;
-use smart\user\backend\forms\SettingsForm;
+use smart\user\forms\SettingsForm;
 
 class SettingsController extends Controller
 {
-
     /**
      * User settings
      * @return string
@@ -38,5 +37,4 @@ class SettingsController extends Controller
             'model' => $model,
         ]);
     }
-
 }

@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
 
 class SettingsForm extends Form
 {
-
     /**
      * @var string e-mail
      */
@@ -50,9 +49,9 @@ class SettingsForm extends Form
      */
     public function assignFrom($object)
     {
-        $this->_email = $object->email;
-        $this->firstName = $object->firstName;
-        $this->lastName = $object->lastName;
+        $this->_email = self::fromString($object->email);
+        $this->firstName = self::fromString($object->firstName);
+        $this->lastName = self::fromString($object->lastName);
     }
 
     /**
@@ -60,8 +59,8 @@ class SettingsForm extends Form
      */
     public function assignTo($object)
     {
-        $object->firstName = $this->firstName;
-        $object->lastName = $this->lastName;
+        $object->firstName = self::toString($this->firstName);
+        $object->lastName = self::toString($this->lastName);
     }
 
     /**
@@ -72,5 +71,4 @@ class SettingsForm extends Form
     {
         return $this->_email;
     }
-
 }
