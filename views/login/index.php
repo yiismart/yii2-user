@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap4\ActiveForm;
+use smart\widgets\ActiveForm;
 use yii\helpers\Html;
 
 // Title
@@ -10,9 +10,7 @@ $this->title = $title . ' | ' . Yii::$app->name;
 ?>
 <h1><?= Html::encode($title) ?></h1>
 
-<?php $form = ActiveForm::begin([
-    'enableClientValidation' => false,
-]); ?>
+<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'email')->textInput() ?>
 
@@ -21,7 +19,7 @@ $this->title = $title . ' | ' . Yii::$app->name;
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
     <div class="form-group form-buttons row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 offset-sm-2">
             <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
