@@ -1,19 +1,18 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\backend\filters\RoleFilter;
-use smart\user\backend\forms\RoleForm;
-use smart\user\backend\models\Role;
+use smart\user\filters\RoleFilter;
+use smart\user\forms\RoleForm;
+use smart\user\models\Role;
 use smart\user\models\User;
 
 class RoleController extends BackendController
 {
-
     /**
      * List
      * @return string
@@ -117,5 +116,4 @@ class RoleController extends BackendController
             ];
         }, $users));
     }
-
 }

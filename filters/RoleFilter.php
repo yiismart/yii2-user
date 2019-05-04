@@ -1,16 +1,15 @@
 <?php
 
-namespace smart\user\backend\filters;
+namespace smart\user\filters;
 
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\rbac\Item;
 use smart\base\FilterInterface;
-use smart\user\backend\models\Role;
+use smart\user\models\Role;
 
 class RoleFilter extends Role implements FilterInterface
 {
-
     /**
      * @var string
      */
@@ -69,5 +68,4 @@ class RoleFilter extends Role implements FilterInterface
             'pagination' => false,
         ], $config));
     }
-
 }

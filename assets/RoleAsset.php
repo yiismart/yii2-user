@@ -1,11 +1,12 @@
 <?php
 
-namespace smart\user\backend\assets;
+namespace smart\user\assets;
 
 use yii\web\AssetBundle;
 
 class RoleAsset extends AssetBundle
 {
+    public $sourcePath = __DIR__ . '/role';
 
     public $js = [
         'role.js',
@@ -18,11 +19,4 @@ class RoleAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
     ];
-
-    public function init()
-    {
-        parent::init();
-        $this->sourcePath = __DIR__ . '/role';
-    }
-
 }

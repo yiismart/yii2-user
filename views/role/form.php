@@ -1,12 +1,12 @@
 <?php
 
-use yii\bootstrap4\ActiveForm;
 use yii\data\ArrayDataProvider;
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\jui\AutoComplete;
-use smart\user\backend\assets\RoleAsset;
+use smart\grid\GridView;
+use smart\widgets\ActiveForm;
+use smart\user\assets\RoleAsset;
 use smart\user\models\User;
 
 RoleAsset::register($this);
@@ -22,19 +22,19 @@ $name = Html::getInputName($model, 'users') . '[]';
 $users = User::findAll($model->users);
 
 ?>
-<?php $form = ActiveForm::begin([
-    'enableClientValidation' => false,
-]); ?>
+<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name') ?>
+
     <?= $form->field($model, 'description') ?>
 
     <?php if (!empty($roles)) echo $form->field($model, 'roles')->checkboxList($roles) ?>
+
     <?php if (!empty($permissions)) echo $form->field($model, 'permissions')->checkboxList($permissions) ?>
 
     <?= $form->field($model, 'users')->widget(AutoComplete::className(), [
         'options' => [
-            'name' => 'email',
+            'name' => '_autocomplete',
             'value' => '',
             'class' => 'form-control',
             'placeholder' => Yii::t('user', 'E-mail'),
@@ -45,7 +45,7 @@ $users = User::findAll($model->users);
         ],
     ]) ?>
     <div class="form-group row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 offset-sm-2">
             <?= Html::hiddenInput($name, '') ?>
             <?= GridView::widget([
                 'dataProvider' => new ArrayDataProvider([
@@ -55,7 +55,6 @@ $users = User::findAll($model->users);
                 'id' => 'role-users',  
                 'layout' => '{items}',
                 'showHeader' => false,
-                'tableOptions' => ['class' => 'table table-bordered table-sm'],
                 'columns' => [
                     ['content' => function ($model) use ($name) {
                         $id = Html::hiddenInput($name, $model->id, $model->getIsNewRecord() ? ['disabled' => true] : []);
@@ -63,9 +62,8 @@ $users = User::findAll($model->users);
                         return $id . $email;
                     }],
                     [
-                        'class' => 'yii\grid\ActionColumn',
+                        'class' => 'smart\grid\ActionColumn',
                         'template' => '{remove}',
-                        'contentOptions' => ['style' => 'width:35px;text-align:center;'],
                         'buttons' => [
                             'remove' => function () {
                                 $title = Yii::t('yii', 'Delete');
@@ -82,9 +80,8 @@ $users = User::findAll($model->users);
         </div>
     </div>
 
-
     <div class="form-group form-buttons row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 offset-sm-2">
             <?= Html::submitButton(Yii::t('cms', 'Save'), ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('cms', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
         </div>

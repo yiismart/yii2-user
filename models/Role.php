@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\models;
+namespace smart\user\models;
 
 use Yii;
 use yii\base\Model;
 
 class Role extends Model
 {
-
     /**
      * @var string
      */
@@ -213,5 +212,4 @@ class Role extends Model
 
         return true;
     }
-
 }

@@ -49,9 +49,10 @@ class SettingsForm extends Form
      */
     public function assignFrom($object)
     {
-        $this->_email = self::fromString($object->email);
         $this->firstName = self::fromString($object->firstName);
         $this->lastName = self::fromString($object->lastName);
+
+        $this->_email = $object->email;
     }
 
     /**

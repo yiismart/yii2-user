@@ -1,12 +1,11 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 
 class RoleForm extends RbacForm
 {
-
     /**
      * @var string
      */
@@ -65,10 +64,14 @@ class RoleForm extends RbacForm
      */
     public function assignFrom($object)
     {
-        $this->name = $object->name;
-        $this->description = $object->description;
-        $this->roles = array_map(function ($item) {return $item->name;}, $object->roles);
-        $this->permissions = array_map(function ($item) {return $item->name;}, $object->permissions);
+        $this->name = self::fromString($object->name);
+        $this->description = self::fromString($object->description);
+        $this->roles = array_map(function ($item) {
+            return self::fromString($item->name);
+        }, $object->roles);
+        $this->permissions = array_map(function ($item) {
+            return self::fromString($item->name);
+        }, $object->permissions);
         $this->users = $object->users;
 
         $this->_name = $object->name;
@@ -81,10 +84,14 @@ class RoleForm extends RbacForm
     {
         $auth = Yii::$app->getAuthManager();
 
-        $object->name = $this->name;
-        $object->description = $this->description;
-        $object->roles = array_map(function ($name) use ($auth) {return $auth->getRole($name);}, is_array($this->roles) ? $this->roles : []);
-        $object->permissions = array_map(function ($name) use ($auth) {return $auth->getPermission($name);}, is_array($this->permissions) ? $this->permissions : []);
+        $object->name = self::toString($this->name);
+        $object->description = self::toString($this->description);
+        $object->roles = array_map(function ($name) use ($auth) {
+            return $auth->getRole($name);
+        }, is_array($this->roles) ? $this->roles : []);
+        $object->permissions = array_map(function ($name) use ($auth) {
+            return $auth->getPermission($name);
+        }, is_array($this->permissions) ? $this->permissions : []);
         $object->users = is_array($this->users) ? $this->users : [];
     }
 
@@ -123,5 +130,4 @@ class RoleForm extends RbacForm
 
         return array_map(create_function('$v', 'return $v->name;'), $items);
     }
-
 }
