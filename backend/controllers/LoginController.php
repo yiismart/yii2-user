@@ -1,10 +1,10 @@
 <?php
 
-namespace smart\user\controllers;
+namespace smart\user\backend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use smart\user\forms\LoginForm;
+use smart\user\backend\forms\LoginForm;
 
 class LoginController extends Controller
 {

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\jui\AutoComplete;
 use smart\grid\GridView;
 use smart\widgets\ActiveForm;
-use smart\user\assets\RoleAsset;
+use smart\user\backend\assets\RoleAsset;
 use smart\user\models\User;
 
 RoleAsset::register($this);

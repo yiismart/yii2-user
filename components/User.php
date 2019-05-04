@@ -5,11 +5,10 @@ namespace smart\user\components;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
-use smart\user\frontend\Module;
+use smart\user\Module;
 
 class User extends \yii\web\User
 {
-
     /**
      * @inheritdoc
      */
@@ -121,5 +120,4 @@ class User extends \yii\web\User
         }
         throw new ForbiddenHttpException(Yii::t('user', 'Password change required.'));
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\controllers;
+namespace smart\user\backend\controllers;
 
 use Yii;
 use yii\web\Controller;

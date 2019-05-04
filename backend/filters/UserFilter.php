@@ -1,11 +1,11 @@
 <?php
 
-namespace smart\user\filters;
+namespace smart\user\backend\filters;
 
 use Yii;
 use yii\data\ActiveDataProvider;
 use smart\base\FilterInterface;
-use smart\user\models\User;
+use smart\user\backend\models\User;
 
 class UserFilter extends User implements FilterInterface
 {

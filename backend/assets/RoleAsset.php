@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\assets;
+namespace smart\user\backend\assets;
 
 use yii\web\AssetBundle;
 

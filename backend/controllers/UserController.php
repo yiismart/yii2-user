@@ -1,17 +1,16 @@
 <?php
 
-namespace smart\user\controllers;
+namespace smart\user\backend\controllers;
 
 use Yii;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\filters\RoleFilter;
-use smart\user\forms\RoleForm;
-use smart\user\models\Role;
-use smart\user\models\User;
+use smart\user\backend\filters\UserFilter;
+use smart\user\backend\forms\UserForm;
+use smart\user\backend\forms\UserPasswordForm;
+use smart\user\backend\models\User;
 
-class RoleController extends BackendController
+class UserController extends BackendController
 {
     /**
      * List
@@ -19,7 +18,7 @@ class RoleController extends BackendController
      */
     public function actionIndex()
     {
-        $model = new RoleFilter;
+        $model = new UserFilter;
         $model->load(Yii::$app->getRequest()->get());
 
         return $this->render('index', [
@@ -33,8 +32,8 @@ class RoleController extends BackendController
      */
     public function actionCreate()
     {
-        $object = new Role;
-        $model = new RoleForm;
+        $object = new User;
+        $model = new UserForm(['scenario' => 'create']);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $model->assignTo($object);
@@ -51,17 +50,17 @@ class RoleController extends BackendController
 
     /**
      * Update
-     * @param string $name
-     * @return void
+     * @param integer $id 
+     * @return string
      */
-    public function actionUpdate($name)
+    public function actionUpdate($id)
     {
-        $object = Role::findOne($name);
+        $object = User::findOne($id);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
 
-        $model = new RoleForm;
+        $model = new UserForm;
         $model->assignFrom($object);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
@@ -79,41 +78,31 @@ class RoleController extends BackendController
     }
 
     /**
-     * Role deleting
-     * @param string $name Role name
-     * @return void
+     * Set password
+     * @param integer $id 
+     * @return string
      */
-    public function actionDelete($name)
+    public function actionPassword($id)
     {
-        $object = Role::findOne($name);
+        $object = User::findOne($id);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
 
-        if ($object->delete()) {
-            Yii::$app->session->setFlash('success', Yii::t('cms', 'Item deleted successfully.'));
+        $model = new UserPasswordForm;
+        $model->assignFrom($object);
+
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
+            $model->assignTo($object);
+            if ($object->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
+            }
+            return $this->redirect(['index']);
         }
 
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * User autocomplete
-     * @param string $term 
-     * @return string
-     */
-    public function actionUsers($term)
-    {
-        $users = User::find()->andWhere(['and',
-            ['<>', 'email', 'admin'],
-            ['like', 'email', $term],
-        ])->limit(8)->all();
-
-        return Json::encode(array_map(function ($user) {
-            return [
-                'id' => $user->id,
-                'value' => $user->email,
-            ];
-        }, $users));
+        return $this->render('password', [
+            'model' => $model,
+            'object' => $object,
+        ]);
     }
 }

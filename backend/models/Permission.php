@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\models;
+namespace smart\user\backend\models;
 
 use Yii;
 use yii\base\Model;

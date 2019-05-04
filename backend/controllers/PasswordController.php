@@ -1,36 +1,36 @@
 <?php
 
-namespace smart\user\controllers;
+namespace smart\user\backend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use smart\user\forms\SettingsForm;
+use smart\user\backend\forms\PasswordChangeForm;
 
-class SettingsController extends Controller
+class PasswordController extends Controller
 {
     /**
-     * User settings
+     * Change password
      * @return string
      */
     public function actionIndex()
     {
         $user = Yii::$app->getUser();
 
+        // Check login
         if ($user->getIsGuest()) {
-            return $this->goHome();
+            return $user->loginRequired();
         }
 
         $object = $user->getIdentity();
-
-        $model = new SettingsForm;
+        $model = new PasswordChangeForm;
         $model->assignFrom($object);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $model->assignTo($object);
-            $object->save(false);
-
-            Yii::$app->getSession()->setFlash('success', Yii::t('cms', 'Changes saved successfully.'));
-            return $this->refresh();
+            if ($object->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
+            }
+            return $this->goHome();
         }
 
         return $this->render('index', [

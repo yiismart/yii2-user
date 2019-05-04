@@ -1,15 +1,17 @@
 <?php
 
-namespace smart\user\controllers;
+namespace smart\user\backend\controllers;
 
 use Yii;
+use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\filters\PermissionFilter;
-use smart\user\forms\PermissionForm;
-use smart\user\models\Permission;
+use smart\user\backend\filters\RoleFilter;
+use smart\user\backend\forms\RoleForm;
+use smart\user\backend\models\Role;
+use smart\user\models\User;
 
-class PermissionController extends BackendController
+class RoleController extends BackendController
 {
     /**
      * List
@@ -17,7 +19,7 @@ class PermissionController extends BackendController
      */
     public function actionIndex()
     {
-        $model = new PermissionFilter;
+        $model = new RoleFilter;
         $model->load(Yii::$app->getRequest()->get());
 
         return $this->render('index', [
@@ -31,8 +33,8 @@ class PermissionController extends BackendController
      */
     public function actionCreate()
     {
-        $object = new Permission;
-        $model = new PermissionForm;
+        $object = new Role;
+        $model = new RoleForm;
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $model->assignTo($object);
@@ -50,16 +52,16 @@ class PermissionController extends BackendController
     /**
      * Update
      * @param string $name
-     * @return string
+     * @return void
      */
     public function actionUpdate($name)
     {
-        $object = Permission::findOne($name);
+        $object = Role::findOne($name);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
 
-        $model = new PermissionForm;
+        $model = new RoleForm;
         $model->assignFrom($object);
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
@@ -77,13 +79,13 @@ class PermissionController extends BackendController
     }
 
     /**
-     * Delete
-     * @param string $name
-     * @return string
+     * Role deleting
+     * @param string $name Role name
+     * @return void
      */
     public function actionDelete($name)
     {
-        $object = Permission::findOne($name);
+        $object = Role::findOne($name);
         if ($object === null) {
             throw new BadRequestHttpException(Yii::t('cms', 'Item not found.'));
         }
@@ -93,5 +95,25 @@ class PermissionController extends BackendController
         }
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * User autocomplete
+     * @param string $term 
+     * @return string
+     */
+    public function actionUsers($term)
+    {
+        $users = User::find()->andWhere(['and',
+            ['<>', 'email', 'admin'],
+            ['like', 'email', $term],
+        ])->limit(8)->all();
+
+        return Json::encode(array_map(function ($user) {
+            return [
+                'id' => $user->id,
+                'value' => $user->email,
+            ];
+        }, $users));
     }
 }

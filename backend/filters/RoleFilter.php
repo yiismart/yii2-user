@@ -1,14 +1,25 @@
 <?php
 
-namespace smart\user\filters;
+namespace smart\user\backend\filters;
 
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\rbac\Item;
 use smart\base\FilterInterface;
-use smart\user\models\Permission;
+use smart\user\backend\models\Role;
 
-class PermissionFilter extends Permission implements FilterInterface
+class RoleFilter extends Role implements FilterInterface
 {
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $description;
+
     /**
      * @inheritdoc
      */
@@ -16,7 +27,6 @@ class PermissionFilter extends Permission implements FilterInterface
     {
         return [
             'name' => Yii::t('user', 'Name'),
-            'own' => Yii::t('user', 'Allow to author'),
         ];
     }
 
@@ -26,17 +36,28 @@ class PermissionFilter extends Permission implements FilterInterface
     public function getDataProvider($config = [])
     {
         $auth = Yii::$app->getAuthManager();
-        $ownItem = $auth->getPermission('own');
 
         $items = [];
-        foreach ($auth->getPermissions() as $name => $item) {
-            if ($name == 'own') {
+        foreach ($auth->getRoles() as $item) {
+            if ($item->name == 'author') {
                 continue;
             }
+
+            // Roles and permissions
+            $roles = $permissions = [];
+            foreach ($auth->getChildren($item->name) as $child) {
+                if ($child->type == Item::TYPE_ROLE) {
+                    $roles[] = $child;
+                } else {
+                    $permissions[] = $child;
+                }
+            }
+
             $items[] = new static([
                 'name' => $item->name,
                 'description' => $item->description,
-                'own' => $ownItem && $auth->hasChild($ownItem, $item),
+                'roles' => $roles,
+                'permissions' => $permissions,
             ]);
         }
 
