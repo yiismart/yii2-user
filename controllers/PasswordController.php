@@ -1,14 +1,13 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\Controller;
-use smart\user\backend\forms\PasswordChangeForm;
+use smart\user\forms\PasswordChangeForm;
 
 class PasswordController extends Controller
 {
-
     /**
      * Change password
      * @return string
@@ -31,12 +30,11 @@ class PasswordController extends Controller
             if ($object->save()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('user', 'The new password has been set.'));
             }
-            return $this->goBack();
+            return $this->goHome();
         }
 
         return $this->render('index', [
             'model' => $model,
         ]);
     }
-
 }

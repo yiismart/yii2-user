@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
 
 class PasswordChangeForm extends Form
 {
-
     /**
      * @var string old password
      */
@@ -75,5 +74,4 @@ class PasswordChangeForm extends Form
         $object->setPassword($this->password);
         $object->passwordChange = false;
     }
-
 }

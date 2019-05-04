@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap4\ActiveForm;
+use smart\widgets\ActiveForm;
 use yii\helpers\Html;
 
 // Title
@@ -15,9 +15,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <h1><?= Html::encode($title) ?></h1>
 
-<?php $form = ActiveForm::begin([
-    'enableClientValidation' => false,
-]); ?>
+<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'oldPassword')->passwordInput() ?>
 
@@ -26,7 +24,7 @@ $this->params['breadcrumbs'] = [
     <?= $form->field($model, 'confirm')->passwordInput() ?>
 
     <div class="form-group form-buttons row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 offset-sm-2">
             <?= Html::submitButton(Yii::t('cms', 'Save'), ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
