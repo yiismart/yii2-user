@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
