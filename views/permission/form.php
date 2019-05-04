@@ -1,12 +1,10 @@
 <?php
 
-use yii\bootstrap4\ActiveForm;
+use smart\widgets\ActiveForm;
 use yii\helpers\Html;
 
 ?>
-<?php $form = ActiveForm::begin([
-    'enableClientValidation' => false,
-]); ?>
+<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name') ?>
 
@@ -15,7 +13,7 @@ use yii\helpers\Html;
     <?= $form->field($model, 'own')->checkbox() ?>
 
     <div class="form-group form-buttons row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 offset-sm-2">
             <?= Html::submitButton(Yii::t('cms', 'Save'), ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('cms', 'Cancel'), ['index'], ['class' => 'btn btn-secondary']) ?>
         </div>

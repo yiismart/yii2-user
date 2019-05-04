@@ -1,14 +1,13 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\Controller;
-use smart\user\backend\forms\LoginForm;
+use smart\user\forms\LoginForm;
 
 class LoginController extends Controller
 {
-
     /**
      * Login
      * @return string
@@ -29,5 +28,4 @@ class LoginController extends Controller
             'model' => $model,
         ]);
     }
-
 }

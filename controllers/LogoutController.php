@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\Controller;
 
 class LogoutController extends Controller
 {
-
     /**
      * Logout
      * @return string
@@ -22,5 +21,4 @@ class LogoutController extends Controller
 
         return $this->goBack();
     }
-
 }

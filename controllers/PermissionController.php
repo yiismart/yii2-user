@@ -1,17 +1,16 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\backend\filters\PermissionFilter;
-use smart\user\backend\forms\PermissionForm;
-use smart\user\backend\models\Permission;
+use smart\user\filters\PermissionFilter;
+use smart\user\forms\PermissionForm;
+use smart\user\models\Permission;
 
 class PermissionController extends BackendController
 {
-
     /**
      * List
      * @return string
@@ -95,5 +94,4 @@ class PermissionController extends BackendController
 
         return $this->redirect(['index']);
     }
-
 }

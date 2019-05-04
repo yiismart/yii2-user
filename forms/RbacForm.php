@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
 
 class RbacForm extends Form
 {
-
     /**
      * @var string
      */
@@ -28,5 +27,4 @@ class RbacForm extends Form
             $this->addError($attribute, Yii::t('user', "{s} is already in use.", ['s' => $this->getAttributeLabel($attribute)]));
         }
     }
-
 }

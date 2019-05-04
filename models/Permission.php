@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\models;
+namespace smart\user\models;
 
 use Yii;
 use yii\base\Model;
 
 class Permission extends Model
 {
-
     /**
      * @var string
      */
@@ -145,5 +144,4 @@ class Permission extends Model
 
         return true;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
@@ -8,7 +8,6 @@ use smart\user\models\User;
 
 class LoginForm extends Form
 {
-
     /**
      * @var string user e-mail
      */
@@ -98,7 +97,7 @@ class LoginForm extends Form
             return false;
         }
 
-        return $this->getUser()->login($this->rememberMe ? 3600*24*30 : 0);
+        return $this->getUser()->login($this->rememberMe ? 3600 * 24 * 30 : 0);
     }
 
     /**
@@ -113,5 +112,4 @@ class LoginForm extends Form
 
         return $this->_user = User::findByEmail($this->email);
     }
-
 }

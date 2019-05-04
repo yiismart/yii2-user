@@ -1,12 +1,11 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 
 class PermissionForm extends RbacForm
 {
-
     /**
      * @var string
      */
@@ -53,9 +52,9 @@ class PermissionForm extends RbacForm
      */
     public function assignFrom($object)
     {
-        $this->name = $object->name;
-        $this->description = $object->description;
-        $this->own = $object->own ? '1' : '0';
+        $this->name = self::fromString($object->name);
+        $this->description = self::fromString($object->description);
+        $this->own = self::fromBoolean($object->own);
 
         // Rbac form validation
         $this->_name = $object->name;
@@ -66,9 +65,8 @@ class PermissionForm extends RbacForm
      */
     public function assignTo($object)
     {
-        $object->name = $this->name;
-        $object->description = $this->description;
-        $object->own = $this->own == 0 ? false : true;
+        $object->name = self::toString($this->name);
+        $object->description = self::toString($this->description);
+        $object->own = self::toBoolean($this->own);
     }
-
 }

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 // Title
-$title = Yii::t('user', 'Create permission');
+$title = Yii::t('user', 'Add new permission');
 $this->title = $title . ' | ' . Yii::$app->name;
 
 // Breadcrumbs

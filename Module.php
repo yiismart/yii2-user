@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\backend;
+namespace smart\user;
 
 use Yii;
 use yii\helpers\Html;
@@ -10,7 +10,6 @@ use smart\user\models\User;
 
 class Module extends BackendModule
 {
-
     /**
      * @inheritdoc
      */
@@ -99,5 +98,4 @@ class Module extends BackendModule
             ],
         ];
     }
-
 }

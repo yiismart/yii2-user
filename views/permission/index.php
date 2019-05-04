@@ -18,7 +18,7 @@ $this->params['breadcrumbs'] = [
 <h1><?= Html::encode($title) ?></h1>
 
 <p class="form-buttons">
-    <?= Html::a(Yii::t('cms', 'Create'), ['create'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(Yii::t('cms', 'Add new'), ['create'], ['class' => 'btn btn-primary']) ?>
 </p>
 
 <?= GridView::widget([
@@ -29,11 +29,11 @@ $this->params['breadcrumbs'] = [
             'format' => 'html',
             'value' => function($model, $key, $index, $column) {
                 $r = Html::encode($model->name);
-                if (!empty($model->description)) {
-                    $r .= ' ' . Html::tag('span', Html::encode('('.$model->description.')'), ['class' => 'text-muted']);
-                }
                 if ($model->own) {
                     $r .= ' ' . Html::tag('span', Html::encode($model->getAttributeLabel('own')), ['class' => 'badge badge-primary']);
+                }
+                if (!empty($model->description)) {
+                    $r .= '<br>' . Html::tag('span', Html::encode($model->description), ['class' => 'text-muted']);
                 }
 
                 return $r;

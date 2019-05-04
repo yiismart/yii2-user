@@ -1,15 +1,14 @@
 <?php
 
-namespace smart\user\backend\filters;
+namespace smart\user\filters;
 
 use Yii;
 use yii\data\ArrayDataProvider;
 use smart\base\FilterInterface;
-use smart\user\backend\models\Permission;
+use smart\user\models\Permission;
 
 class PermissionFilter extends Permission implements FilterInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -48,5 +47,4 @@ class PermissionFilter extends Permission implements FilterInterface
             'pagination' => false,
         ], $config));
     }
-
 }
