@@ -57,7 +57,7 @@ class Module extends BackendModule
      */
     public function menu(&$items)
     {
-        if (!Yii::$app->user->can('admin')) {
+        if (!Yii::$app->getUser()->can('admin')) {
             return;
         }
 
