@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 // Title
-$title = Yii::t('user', 'Create role');
+$title = Yii::t('user', 'Add new role');
 $this->title = $title . ' | ' . Yii::$app->name;
 
 // Breadcrumbs
