@@ -17,7 +17,7 @@ $this->params['breadcrumbs'] = [
 <h1><?= Html::encode($title) ?></h1>
 
 <p class="form-buttons">
-    <?= Html::a(Yii::t('cms', 'Create'), ['create'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(Yii::t('cms', 'Add new'), ['create'], ['class' => 'btn btn-primary']) ?>
 </div>
 
 <?= GridView::widget([

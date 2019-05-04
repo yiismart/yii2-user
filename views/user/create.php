@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 // Title
-$title = Yii::t('user', 'Create user');
+$title = Yii::t('user', 'Add new user');
 $this->title = $title . ' | ' . Yii::$app->name;
 
 // Breadcrumbs

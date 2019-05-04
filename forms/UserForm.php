@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
@@ -8,7 +8,6 @@ use smart\user\models\User;
 
 class UserForm extends Form
 {
-
     /**
      * @var boolean
      */
@@ -83,12 +82,12 @@ class UserForm extends Form
      */
     public function assignFrom($object)
     {
-        $this->admin = $object->admin == 0 ? '0' : '1';
-        $this->email = $object->email;
-        $this->active = $object->active == 0 ? '0' : '1';
-        $this->firstName = $object->firstName;
-        $this->lastName = $object->lastName;
-        $this->comment = $object->comment;
+        $this->admin = self::fromBoolean($object->admin);
+        $this->email = self::fromString($object->email);
+        $this->active = self::fromBoolean($object->active);
+        $this->firstName = self::fromString($object->firstName);
+        $this->lastName = self::fromString($object->lastName);
+        $this->comment = self::fromString($object->comment);
         $this->roles = $object->roles;
     }
 
@@ -97,12 +96,12 @@ class UserForm extends Form
      */
     public function assignTo($object)
     {
-        $object->admin = $this->admin == 1;
-        $object->email = $this->email;
-        $object->active = $this->active == 1;
-        $object->firstName = $this->firstName;
-        $object->lastName = $this->lastName;
-        $object->comment = $this->comment;
+        $object->admin = self::toBoolean($this->admin);
+        $object->email = self::toString($this->email);
+        $object->active = self::toBoolean($this->active);
+        $object->firstName = self::toString($this->firstName);
+        $object->lastName = self::toString($this->lastName);
+        $object->comment = self::toString($this->comment);
         $object->roles = is_array($this->roles) ? $this->roles : [];
     }
 
@@ -119,5 +118,4 @@ class UserForm extends Form
 
         return array_map(create_function('$v', 'return $v->name;'), $items);
     }
-
 }

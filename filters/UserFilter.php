@@ -1,6 +1,6 @@
 <?php
 
-namespace smart\user\backend\filters;
+namespace smart\user\filters;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -9,7 +9,6 @@ use smart\user\models\User;
 
 class UserFilter extends User implements FilterInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -41,5 +40,4 @@ class UserFilter extends User implements FilterInterface
         $config['query'] = $query;
         return new ActiveDataProvider($config);
     }
-
 }

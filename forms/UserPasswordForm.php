@@ -1,13 +1,12 @@
 <?php
 
-namespace smart\user\backend\forms;
+namespace smart\user\forms;
 
 use Yii;
 use smart\base\Form;
 
 class UserPasswordForm extends Form
 {
-
     /**
      * @var string new password
      */
@@ -67,7 +66,6 @@ class UserPasswordForm extends Form
     public function assignTo($object)
     {
         $object->setPassword($this->password);
-        $object->passwordChange = $this->passwordChange == 1;
+        $object->passwordChange = self::toBoolean($this->passwordChange);
     }
-
 }

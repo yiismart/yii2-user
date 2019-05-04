@@ -1,18 +1,17 @@
 <?php
 
-namespace smart\user\backend\controllers;
+namespace smart\user\controllers;
 
 use Yii;
 use yii\web\BadRequestHttpException;
 use smart\base\BackendController;
-use smart\user\backend\filters\UserFilter;
-use smart\user\backend\forms\UserForm;
-use smart\user\backend\forms\UserPasswordForm;
-use smart\user\backend\models\User;
+use smart\user\filters\UserFilter;
+use smart\user\forms\UserForm;
+use smart\user\forms\UserPasswordForm;
+use smart\user\models\User;
 
 class UserController extends BackendController
 {
-
     /**
      * List
      * @return string
@@ -106,5 +105,4 @@ class UserController extends BackendController
             'object' => $object,
         ]);
     }
-
 }
