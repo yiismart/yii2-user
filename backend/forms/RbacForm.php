@@ -13,6 +13,17 @@ class RbacForm extends Form
     protected $_name;
 
     /**
+     * @inheritdoc
+     */
+    public function assignFrom($object, $attributeNames = null)
+    {
+        parent::assignFrom($object, $attributeNames = null);
+
+        // Rbac form validation
+        $this->_name = $object->name;
+    }
+
+    /**
      * Name validator
      * @param string $attribute 
      * @param array $params 

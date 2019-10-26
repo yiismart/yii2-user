@@ -62,37 +62,22 @@ class RoleForm extends RbacForm
     /**
      * @inheritdoc
      */
-    public function assignFrom($object)
+    public function map()
     {
-        $this->name = self::fromString($object->name);
-        $this->description = self::fromString($object->description);
-        $this->roles = array_map(function ($item) {
-            return self::fromString($item->name);
-        }, $object->roles);
-        $this->permissions = array_map(function ($item) {
-            return self::fromString($item->name);
-        }, $object->permissions);
-        $this->users = $object->users;
-
-        $this->_name = $object->name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function assignTo($object)
-    {
-        $auth = Yii::$app->getAuthManager();
-
-        $object->name = self::toString($this->name);
-        $object->description = self::toString($this->description);
-        $object->roles = array_map(function ($name) use ($auth) {
-            return $auth->getRole($name);
-        }, is_array($this->roles) ? $this->roles : []);
-        $object->permissions = array_map(function ($name) use ($auth) {
-            return $auth->getPermission($name);
-        }, is_array($this->permissions) ? $this->permissions : []);
-        $object->users = is_array($this->users) ? $this->users : [];
+        return [
+            [['name', 'description'], 'string'],
+            ['roles', 'array', 'from' => function($value) {
+                return $value->name;
+            }, 'to' => function($value) {
+                return Yii::$app->getAuthManager()->getRole($value);
+            }],
+            ['permissions', 'array', 'from' => function($value) {
+                return $value->name;
+            }, 'to' => function($value) {
+                return Yii::$app->getAuthManager()->getPermission($value);
+            }],
+            ['users', 'array', 'mapper' => 'integer'],
+        ];
     }
 
     /**

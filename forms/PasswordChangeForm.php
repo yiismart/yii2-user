@@ -61,7 +61,7 @@ class PasswordChangeForm extends Form
     /**
      * @inheritdoc
      */
-    public function assignFrom($object)
+    public function assignFrom($object, $attributeNames = null)
     {
         $this->_object = $object;
     }
@@ -69,7 +69,7 @@ class PasswordChangeForm extends Form
     /**
      * @inheritdoc
      */
-    public function assignTo($object)
+    public function assignTo($object, $attributeNames = null)
     {
         $object->setPassword($this->password);
         $object->passwordChange = false;

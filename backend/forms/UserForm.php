@@ -21,7 +21,7 @@ class UserForm extends Form
     /**
      * @var boolean
      */
-    public $active = true;
+    public $active = 1;
 
     /**
      * @var string
@@ -80,29 +80,13 @@ class UserForm extends Form
     /**
      * @inheritdoc
      */
-    public function assignFrom($object)
+    public function map()
     {
-        $this->admin = self::fromBoolean($object->admin);
-        $this->email = self::fromString($object->email);
-        $this->active = self::fromBoolean($object->active);
-        $this->firstName = self::fromString($object->firstName);
-        $this->lastName = self::fromString($object->lastName);
-        $this->comment = self::fromString($object->comment);
-        $this->roles = $object->roles;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function assignTo($object)
-    {
-        $object->admin = self::toBoolean($this->admin);
-        $object->email = self::toString($this->email);
-        $object->active = self::toBoolean($this->active);
-        $object->firstName = self::toString($this->firstName);
-        $object->lastName = self::toString($this->lastName);
-        $object->comment = self::toString($this->comment);
-        $object->roles = is_array($this->roles) ? $this->roles : [];
+        return [
+            [['admin', 'active'], 'boolean'],
+            [['email', 'firstName', 'lastName', 'comment'], 'string'],
+            ['roles', 'array', 'mapper' => 'string'],
+        ];
     }
 
     /**

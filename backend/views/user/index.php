@@ -17,14 +17,14 @@ $this->params['breadcrumbs'] = [
 <h1><?= Html::encode($title) ?></h1>
 
 <p class="form-buttons">
-    <?= Html::a(Yii::t('cms', 'Add new'), ['create'], ['class' => 'btn btn-primary']) ?>
-</div>
+    <?= Html::a(Yii::t('cms', 'Add'), ['create'], ['class' => 'btn btn-primary']) ?>
+</p>
 
 <?= GridView::widget([
     'dataProvider' => $model->getDataProvider(),
     'filterModel' => $model,
     'rowOptions' => function ($model, $key, $index, $grid) {
-        return !$model->active ? ['class' => 'table-warning'] : [];
+        return !$model->active ? ['class' => 'table-inactive'] : [];
     },
     'columns' => [
         [
